@@ -8,7 +8,7 @@ Project title: Intergalactic War
 
 Project page: https://github.com/AngaIV/Intergalactic-War
 
-Instructions for use (allowable actions): The program will be simple and easy to run. Revised: Future updates regarding game controls will be documented within progressively.
+Instructions for use (allowable actions): The program will be simple and easy to run. Revised: Future updates regarding game controls will be documented, progressively.
 
 Tools used: Edited: Adobe Photoshop was utilized for crafting and enhancing in-game characters and various visual elements.
 
