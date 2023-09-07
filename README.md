@@ -10,7 +10,7 @@ Project page: https://github.com/AngaIV/Intergalactic-War
 
 Instructions for use (allowable actions): The program will be simple and easy to run. Revised: Future updates regarding game controls will be documented within progressively.
 
-Tools used: Adobe Photoshop
+Tools used: Edited: Adobe Photoshop was utilized for crafting and enhancing in-game characters and various visual elements.
 
 Concepts used: Lists, Files, Loops and Custom classes.
 
