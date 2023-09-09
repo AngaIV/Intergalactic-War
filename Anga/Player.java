@@ -49,6 +49,8 @@ public class Player {
         if(y_int < radius) y_int = radius;
         if(x_int > Panel.WIDTH - radius) x_int = Panel.WIDTH - radius;
         if(x_int > Panel.HEIGHT - radius) x_int = Panel.HEIGHT - radius;
+        dirX = 0;
+        dirY= 0;
     }
     public void draw(Graphics2D g) {
         
