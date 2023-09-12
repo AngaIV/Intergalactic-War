@@ -1,5 +1,5 @@
 import javax.swing.JFrame;
-import java.lang.Runnable;
+
 import javax.swing.ImageIcon;
 
 public class Game {

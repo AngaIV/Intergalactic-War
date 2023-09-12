@@ -30,6 +30,12 @@ public class Player {
     lives = 5;
     }
     
+    public void setLeft(boolean b) {left = b;}
+    public void setRight(boolean b) {right = b;}
+    public void setUp(boolean b) {up = b;}
+    public void setDown(boolean b) {down = b;}
+
+    
     public void update() {
         if(left) {
             dirX = -speedofplayer;
@@ -53,6 +59,15 @@ public class Player {
         dirY= 0;
     }
     public void draw(Graphics2D g) {
+
+        g.setColor(Color.red);
+        g.fillRect(x_int -radius, y_int-radius, 2*radius, 2*radius);
         
+        g.setStroke(new BasicStroke(3));
+        g.setColor(Color.blue);
+        g.drawRect(x_int -radius, y_int-radius, 2*radius, 2*radius);
+        //(x_int - radius, y_int - radius, radius * 2, radius *2);
+        g.setStroke(new BasicStroke(1));
+       
     }
 }
