@@ -2,14 +2,13 @@ import javax.swing.JPanel;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.image.*;
-//import java.lang.Runnable;
 import java.awt.event.KeyListener;
 import java.awt.event.*;
 
 public class Panel extends JPanel implements Runnable, KeyListener{
     
-    public static int WIDTH = 500;
-    public static int HEIGHT = 500;
+    public static int WIDTH = 1000;
+    public static int HEIGHT = 1000;
     private Thread thread;
     private boolean isRunning;
     private BufferedImage image; //canvas
@@ -74,15 +73,16 @@ public class Panel extends JPanel implements Runnable, KeyListener{
             
         }
     }
+    
     private void gUpdate() { //logic of the game
         player.update();
     }
     
     private void gRender(){
-       g.setColor(Color.black);
+       g.setColor(Color.DARK_GRAY);
        g.fillRect(0, 0, WIDTH, HEIGHT);
        g.setColor(Color.RED);
-       g.drawString("FPS: " + avgFPS, 50, 50);
+       //g.drawString("FPS: " + avgFPS, 50, 50);
        player.draw(g);
     }
     private void gDraw(){
