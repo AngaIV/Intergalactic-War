@@ -1,15 +1,18 @@
-import javax.swing.JFrame;
+package main;
 
+import javax.swing.JFrame;
 import javax.swing.ImageIcon;
 
-public class Game {
+public class main {
     public static void main(String[] args){
-        ImageIcon logo = new ImageIcon(".//res//Alien.png");
+        ImageIcon logo = new ImageIcon("/images/Alien.png");
         JFrame window = new JFrame("IntergalacticWars");
         window.setIconImage(logo.getImage());
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setContentPane(new Panel());
+        GPanel gpan = new GPanel();
+        window.add(gpan);
         window.pack();
         window.setVisible(true);
+        gpan.startThread();
     }
 }
