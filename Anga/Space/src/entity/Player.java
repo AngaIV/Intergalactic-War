@@ -6,26 +6,35 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import main.GPanel;
+import static main.GPanel.BulletList;
 import main.KeyHandler;
 import object.Bullets;
 
 public class Player extends Entity{
+
+
     GPanel gpan;
     KeyHandler kH;
     
+    private long fTimer;
+    private long fDelay;
+    
     public Player(GPanel gpan, KeyHandler kH){
-    this.gpan = gpan;
-    this.kH = kH;
-    values();
-    playerImage();
+        this.gpan = gpan;
+        this.kH = kH;
+        values();
+        playerImage();
+        kH.PressShoot = false;
+        fTimer = System.nanoTime();
+        fDelay = 200;
     }
     
     public void values(){
-        x = 100;
-        y = 100;
+        x = 450;
+        y = 450;
         speed2 = 5;
         dir = "down";
-        projectile = new Bullets(gpan);
+      
     }
     public void playerImage(){
         try{
@@ -72,11 +81,12 @@ public class Player extends Entity{
         }
     
         if (kH.PressShoot == true){ 
-            projectile.set(dir, x, y);
-            gpan.projectileList.add(projectile);
-        }   
-        
-        
+            long pass = (System.nanoTime() - fTimer)/1000000;
+            if(pass > fDelay){
+                GPanel.BulletList.add(new Bullets(270,x,y));
+                fTimer = System.nanoTime();
+            }
+        }
         
     }
     public void draw(Graphics2D g2){

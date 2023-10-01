@@ -1,12 +1,18 @@
 package main;
 
+import entity.Player;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
     
     public boolean PressUp, PressDown, PressLeft, PressRight, PressShoot;
+    GPanel gpan;
     
+    /*public KeyHandler(GPanel gpan){
+        this.gpan = gpan;
+    }*/
+
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -28,21 +34,23 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_RIGHT){
             PressRight = true;
         }
+        if (keyCode == KeyEvent.VK_S){
+            PressShoot = true;
+         
+        }
     
     }
     
-    public void playState(int keyCode){
+    /*public void playState(int keyCode){
         if (keyCode == KeyEvent.VK_F){
             PressShoot = true;
         }
-    }
+    }*/
     @Override
     public void keyReleased(KeyEvent e){
         int keyCode = e.getKeyCode();
         
-        if (keyCode == KeyEvent.VK_F){
-            PressShoot = false;
-        }
+
         if (keyCode == KeyEvent.VK_UP){
             PressUp = false;
         }
@@ -54,6 +62,9 @@ public class KeyHandler implements KeyListener{
         }
         if (keyCode == KeyEvent.VK_RIGHT){
             PressRight = false;
+        }
+        if (keyCode == KeyEvent.VK_S){
+            PressShoot = false;
         }
     }
 }

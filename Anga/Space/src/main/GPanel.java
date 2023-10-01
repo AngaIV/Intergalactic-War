@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import object.Bullets;
 
 public class GPanel extends JPanel implements Runnable{
     
@@ -19,7 +20,7 @@ public class GPanel extends JPanel implements Runnable{
     public int tilesize = 200;
     private Thread thread;
     KeyHandler kH = new KeyHandler();
-    public ArrayList<Entity> projectileList = new ArrayList<>();
+    public static ArrayList<Bullets> BulletList;
     public ArrayList<Entity> entityList = new ArrayList<>();
     TileManager TM = new TileManager(this);
 //    private boolean isRunning;
@@ -30,6 +31,12 @@ public class GPanel extends JPanel implements Runnable{
     int FPS = 60;
     
     
+    //Game State
+    public int gameState;
+    public final int NullMenu = 0;
+    public final int play = 1;
+    public final int pause = 2;
+    
     public GPanel() {
        
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -38,16 +45,22 @@ public class GPanel extends JPanel implements Runnable{
         this.addKeyListener(kH);
         this.setFocusable(true);
     }
+    
+    public void setUp(){
+        gameState = NullMenu;
+    }
+    
     public void startThread(){
         thread = new Thread(this);
         thread.start();
     }
+    
 
     @Override
     public void run() {
         double drawInterval = 1000000000/FPS;
         double DrawTime = System.nanoTime() + drawInterval;
-        
+        BulletList = new ArrayList<Bullets>();
         while(thread!=null){
             
             update();
@@ -69,7 +82,17 @@ public class GPanel extends JPanel implements Runnable{
     }
         
     public void update(){
+        
+       
         player.update();
+        for (int i=0; i<BulletList.size(); i++){
+            boolean remove = BulletList.get(i).update();
+            if(remove){
+                BulletList.remove(i);
+                i--;
+            }
+        }
+
 //        for (int i=0; i < projectileList.size(); i++){
 //            if(projectileList.get(i) != null){
 //                projectileList.get(i).update();
@@ -79,8 +102,16 @@ public class GPanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+        
+        //Title Screen
+       
+        
         TM.draw(g2);
         player.draw(g2);
+        
+        for (int i=0; i<BulletList.size(); i++){
+            BulletList.get(i).draw(g2);
+        }
         g2.dispose();
     }
     
