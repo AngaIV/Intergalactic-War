@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 public class Entity {
     
-    public int x, y;
+    public int x, y, xb, yb;
     public int speed2, speedbull;
     public BufferedImage upDef, downDef, leftDef, rightDef, bulletDef;
     public String dir;

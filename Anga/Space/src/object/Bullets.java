@@ -2,6 +2,7 @@ package object;
 
 import java.awt.*;
 import main.GPanel;
+import entity.Entity;
 
 public class Bullets{
     
@@ -16,12 +17,12 @@ public class Bullets{
     
     private Color c1;
     
-    public Bullets(double angle, int x, int y){
+    public Bullets(int x, int y, double angle){
         this.x = x;
         this.y = y;
         r = 4;
         
-        speed = 15;
+        speed = 17;
         rad = Math.toRadians(angle);
         dx = Math.cos(rad) * speed;
         dy = Math.sin(rad) * speed;
@@ -39,6 +40,6 @@ public class Bullets{
     
     public void draw(Graphics2D g2){
         g2.setColor(c1);
-        g2.fillOval((int)(x-r),(int) (y-r),2*r, 2*r);
+        g2.fillOval((int)(x),(int) (y-r),2*r, 2*r);
     }
 }

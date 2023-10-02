@@ -30,7 +30,9 @@ public class Player extends Entity{
     }
     
     public void values(){
+        xb = 647;
         x = 450;
+        yb = 600;
         y = 450;
         speed2 = 5;
         dir = "down";
@@ -51,23 +53,27 @@ public class Player extends Entity{
     
     public void update(){
         
-        if(kH.PressUp == true || kH.PressDown == true || kH.PressLeft == true || kH.PressRight == true || kH.PressShoot == true ){
+        if(kH.PressUp == true || kH.PressDown == true || kH.PressLeft == true || kH.PressRight == true || kH.PressShoot == true){
             
             if(kH.PressUp == true){
                 dir = "up";
                 y -= speed2;
+                yb -= speed2;
             }
             else if(kH.PressDown == true){
                 dir = "down";
                 y += speed2;
+                yb += speed2;
             }
             else if(kH.PressLeft == true){
                 dir = "left";
                 x -= speed2;
+                xb -= speed2;
             }
             else if(kH.PressRight == true){
                 dir = "right";
                 x += speed2;
+                xb += speed2;
             }
             counter++;
             if (counter > 16){
@@ -81,9 +87,9 @@ public class Player extends Entity{
         }
     
         if (kH.PressShoot == true){ 
-            long pass = (System.nanoTime() - fTimer)/1000000;
-            if(pass > fDelay){
-                GPanel.BulletList.add(new Bullets(270,x,y));
+            long pass = (System.nanoTime() - fTimer) / 1000000;
+            if (pass > fDelay) {
+                GPanel.BulletList.add(new Bullets(xb, yb, 270)); // Pass x and y coordinates of the spaceship
                 fTimer = System.nanoTime();
             }
         }
