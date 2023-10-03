@@ -8,15 +8,28 @@ public class Entity {
     
     public int x, y, xb, yb;
     public int speed2, speedbull;
-    public BufferedImage upDef, downDef, leftDef, rightDef, bulletDef;
-    public String dir;
+    public BufferedImage upDef, downDef, leftDef, rightDef, bulletDef, botDef;
+    public String dir, shoot;
     public int counter = 0;
     public int num = 1;
     public String shot;
-    public int life;
+    
+    //bots
+    public int health;
+    public int type;
+    public int rank;
+    public boolean ready;
+    public boolean dead;
+    public Color c1;
+    public int dx;
+    public int dy;
+    public double rad;
+    public int speed;
+    public int r;
+    
     public int maxlife = 3;
     public int attack;
-    public Projectiles projectile;
+    
     public int maxM;
     public int M;
     

@@ -34,7 +34,7 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_RIGHT){
             PressRight = true;
         }
-        if (keyCode == KeyEvent.VK_S){
+        if (keyCode == KeyEvent.VK_M){
             PressShoot = true;
          
         }
@@ -63,7 +63,7 @@ public class KeyHandler implements KeyListener{
         if (keyCode == KeyEvent.VK_RIGHT){
             PressRight = false;
         }
-        if (keyCode == KeyEvent.VK_S){
+        if (keyCode == KeyEvent.VK_M){
             PressShoot = false;
         }
     }

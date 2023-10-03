@@ -30,12 +30,13 @@ public class Player extends Entity{
     }
     
     public void values(){
-        xb = 647;
+        xb = 592;
         x = 450;
-        yb = 600;
+        yb = 570;
         y = 450;
         speed2 = 5;
         dir = "down";
+        shoot = "No";
       
     }
     public void playerImage(){
@@ -88,8 +89,9 @@ public class Player extends Entity{
     
         if (kH.PressShoot == true){ 
             long pass = (System.nanoTime() - fTimer) / 1000000;
+            shoot = "Yes";
             if (pass > fDelay) {
-                GPanel.BulletList.add(new Bullets(xb, yb, 270)); // Pass x and y coordinates of the spaceship
+                GPanel.BulletList.add(new Bullets(xb, yb, 270, shoot)); // Pass x and y coordinates of the spaceship
                 fTimer = System.nanoTime();
             }
         }
@@ -133,7 +135,11 @@ public class Player extends Entity{
                 }
                 break;
         }
-        g2.drawImage(image, x, y, 400, 400, null);
+        g2.drawImage(image, x, y, 320, 320, null);
     }
+
+//    public int getLives() {
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//    }
     
 }
