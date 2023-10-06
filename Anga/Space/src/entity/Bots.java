@@ -4,6 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import main.GPanel;
+import object.Bullets;
+import entity.Entity;
+import object.BotBullets;
 
 public class Bots {
 
@@ -22,16 +25,21 @@ public class Bots {
     private boolean dead;
     private BufferedImage botDef;
     private String Thrust;
+    private long fTimer;
+    private long fDelay;
+    private int xb, yb;
+    public boolean shoot1;
 
     public Bots(int type, int rank, String Thrust) {
         this.type = type;
         this.rank = rank;
         this.Thrust = Thrust;
+        
 
         if (type == 1) {
-            c1 = Color.BLUE;
+            //c1 = Color.BLUE;
             if (rank == 1) {
-                speed = 2;
+                speed = 3;
                 r = 10;
                 health = 1;
             }
@@ -46,7 +54,15 @@ public class Bots {
 
         ready = false;
         dead = false;
+        fTimer = System.nanoTime();
+        fDelay = 3000;
         getPlayerImage();
+        values();
+    }
+    public void values(){
+        speed = 2;
+        xb = 592;
+        yb = 570;
     }
     
     public void getPlayerImage(){
@@ -89,26 +105,49 @@ public class Bots {
             }
             if (x < r && dx < 0) {
                 dx = -dx;
+                xb += speed;
+                shoot1 = true;
                 Thrust = "Yes";
+             
+                
             }
             if (x > GPanel.WIDTH - r && dx > 0) {
                 dx = -dx;
+                xb -= speed;
+                shoot1 = true;
                 Thrust = "Yes";
+               
             }
             if (y < r && dy < 0) {
                 dy = -dy;
+                yb += speed;
+                shoot1 = true;
                 Thrust = "Yes";
+           
             }
             if (y > GPanel.HEIGHT/2 - r && dy > 0) {
                 dy = -dy;
+                yb += speed;
+                shoot1 = true;
                 Thrust = "Yes";
+               
+                
+            }
+            if (Thrust.equals("Yes") && !dead) {
+                long pass = (System.nanoTime() - fTimer) / 1000000;
+//                long currentTime = System.nanoTime();
+                if (pass > fDelay) {
+                    GPanel.BotBulletList.add(new BotBullets((int) getX(), (int) getY(), -270, shoot1));
+                    fTimer = System.nanoTime();
+                }
             }
         }
+        
     }
 
+
+
     public void draw(Graphics2D g2){
-//        g2.setColor(c1);
-//        g2.fillOval((int)(x),(int) (y-r),2*r, 2*r);
         
         BufferedImage image = null;
         switch(Thrust){

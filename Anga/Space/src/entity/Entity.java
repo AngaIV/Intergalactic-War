@@ -8,7 +8,7 @@ public class Entity {
     
     public int x, y, xb, yb;
     public int speed2, speedbull;
-    public BufferedImage upDef, downDef, leftDef, rightDef, bulletDef, botDef;
+    public BufferedImage upDef, downDef, leftDef, rightDef, bulletDef, botDef, heartDef, upHit, downHit, leftHit, rightHit;
     public String dir, shoot;
     public int counter = 0;
     public int num = 1;
@@ -26,8 +26,9 @@ public class Entity {
     public double rad;
     public int speed;
     public int r;
+    public int lives;
     
-    public int maxlife = 3;
+    
     public int attack;
     
     public int maxM;
