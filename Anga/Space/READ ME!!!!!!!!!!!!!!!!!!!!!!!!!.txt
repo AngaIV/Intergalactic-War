@@ -1,0 +1,6 @@
+To run the game, open the "RUN GAME HERE" folder and head into the "dir" folder, once open double tap on the "Space.jar"
+
+To run the project from the command line, go to the dist folder and
+type the following:
+
+java -jar "Space.jar" 
