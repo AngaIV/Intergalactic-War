@@ -1,6 +1,6 @@
 Group name: XP Merchants
 
-Group members: Anga Peter, Lithetha Tiso, Caiphus Mahlatji
+Group members: Anga Peter, Liteta Tiso, Caiphus Mahlatji
 
 Group mentor: N/A
 
