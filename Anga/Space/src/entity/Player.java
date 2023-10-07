@@ -17,7 +17,10 @@ public class Player extends Entity{
     GPanel gpan;
     KeyHandler kH;
     private int lives;
-
+    
+    //SCORE
+    private int score;
+    
     private long fTimer;
     private long fDelay;
     private boolean recovering;
@@ -33,7 +36,7 @@ public class Player extends Entity{
         playerImage();
         kH.PressShoot = false;
         fTimer = System.nanoTime();
-        fDelay = 300;
+        fDelay = 200;
         recovering = false;
         recoveryTime = 0;
     }
@@ -41,6 +44,7 @@ public class Player extends Entity{
     public void values(){
         xb = 672;
         x = 650;
+        score = 0;
         yb = 550;
         y = 550;
         r = 10;
@@ -79,6 +83,12 @@ public class Player extends Entity{
     }
     public int getLives(){
         return lives;
+    }
+    public int getScore(){
+        return score;
+    }
+    public void addScore(int s){
+        score += s;
     }
 
     

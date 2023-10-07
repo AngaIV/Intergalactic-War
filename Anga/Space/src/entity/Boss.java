@@ -6,9 +6,10 @@ import javax.imageio.ImageIO;
 import main.GPanel;
 import object.Bullets;
 import entity.Entity;
+import object.BossBullets;
 import object.BotBullets;
 
-public class Bots {
+public class Boss {
 
     private int type;
     private int wave;
@@ -23,88 +24,23 @@ public class Bots {
     private double dy;
     private boolean ready;
     private boolean dead;
-    private BufferedImage botDef, bot2, bot3;
+    private BufferedImage bossDef;
     private String Thrust;
     private long fTimer;
     private long fDelay;
     private int xb, yb;
     public boolean shoot1;
 
-    public Bots(int type, int wave, String Thrust) {
+    public Boss(int type, int wave, String Thrust) {
         this.type = type;
         this.wave = wave;
         this.Thrust = Thrust;
-        
-
-        if (type == 1) {
-            if (wave == 1) {
-                speed = 3;
-                r = 10;
-                health = 1;
-            }
-            if (wave == 2) {
-                speed = 3;
-                r = 10;
-                health = 2;
-            }
-            if (wave == 3) {
-                speed = 3;
-                r = 10;
-                health = 3;
-            }
-            if (wave == 4) {
-                speed = 4;
-                r = 10;
-                health = 4;
-            }
-            
-        }
-        
-        
-        if (type == 2) {
-            if (wave == 1) {
-                speed = 4;
-                r = 10;
-                health = 4;
-            }
-            if (wave == 2) {
-                speed = 4;
-                r = 10;
-                health = 5;
-            }
-            if (wave == 3) {
-                speed = 4;
-                r = 10;
-                health = 5;
-            }
-            if (wave == 4) {
-                speed = 5;
-                r = 10;
-                health = 6;
-            }
-        }
-        
-        
+              
         if (type == 3) {
-            if (wave == 1) {
-                speed = 5;
-                r = 10;
-                health = 6;
-            }
-            if (wave == 2) {
-                speed = 6;
-                r = 10;
-                health = 6;
-            }
             if (wave == 3) {
-                speed = 6;
+                speed = 4;
                 r = 10;
-                health = 6;
-            }
-            if (wave == 4) {
-                speed = 6;
-                r = 10;
-                health = 6;
+                health = 50;
             }
         }
         
@@ -118,48 +54,46 @@ public class Bots {
         ready = false;
         dead = false;
         fTimer = System.nanoTime();
-        fDelay = 3000;
+        fDelay = 10000;
         getPlayerImage();
         values();
     }
     public void values(){
-        speed = 2;
+        speed = 10;
         xb = 592;
         yb = 570;
     }
     
     public void getPlayerImage(){
         try{
-            botDef = ImageIO.read(getClass().getResourceAsStream("/BotSkins/Bot1.png"));
-            bot2 =  ImageIO.read(getClass().getResourceAsStream("/BotSkins/Wave2.png"));
-            bot3 =  ImageIO.read(getClass().getResourceAsStream("/BotSkins/Bot3.png"));
+            bossDef = ImageIO.read(getClass().getResourceAsStream("/BossSkins/boss.png"));
         }catch(IOException e){
             e.printStackTrace();
         }
     }
-    public double getX(){
+    public double gtX(){
         return x;
     }
-    public double getY(){
+    public double gtY(){
         return y;
     }
-    public double getR(){
+    public double gtR(){
         return r;
     }
-        public boolean ifDead(){
+        public boolean Dead(){
         return dead;
     }
-    public void ifHit(){
+    public void Hit(){
     
         health--;
         if(health <= 0){
             dead = true;
         }
     }
-    public int getType(){
+    public int gtType(){
         return type;
     }
-    public int getWave(){
+    public int gtWave(){
         return wave;
     }
 
@@ -172,7 +106,6 @@ public class Bots {
             if (!ready) {
                 if (x > r && x < GPanel.WIDTH - r && y > r && y < GPanel.HEIGHT - r) {
                     ready = true;
-                    
                 }
             }
             if (x < r && dx < 0) {
@@ -207,9 +140,8 @@ public class Bots {
             }
             if (Thrust.equals("Yes") && !dead) {
                 long pass = (System.nanoTime() - fTimer) / 1000000;
-//                long currentTime = System.nanoTime();
                 if (pass > fDelay) {
-                    GPanel.BotBulletList.add(new BotBullets((int) getX(), (int) getY(), -270,type,  shoot1));
+                    GPanel.bossBull.add(new BossBullets((int) gtX(), (int) gtY(), -270,type,  shoot1));
                     fTimer = System.nanoTime();
                 }
             }
@@ -224,16 +156,10 @@ public class Bots {
         BufferedImage image = null;
         switch(Thrust){
             case "Yes":
-                if (type == 1){
-                   image = botDef; 
-                }
-                if (type == 2){
-                    image = bot2;
-                }
                 if (type == 3){
-                    image = bot3;
+                   image = bossDef; 
+                   g2.drawImage(image, (int)x, (int)y, 250, 250, null);
                 }
-        }
-        g2.drawImage(image, (int)x, (int)y, 60, 50, null);
+        } 
     }
 }
