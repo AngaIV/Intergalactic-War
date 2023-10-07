@@ -5,6 +5,7 @@ import javax.swing.ImageIcon;
 
 public class Game {
     public static void main(String[] args){
+        //MAIN METTHOD
         ImageIcon logo = new ImageIcon("/images/Alien.png");
         JFrame window = new JFrame("IntergalacticWars");
         window.setIconImage(logo.getImage());

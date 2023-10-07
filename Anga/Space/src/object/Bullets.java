@@ -20,21 +20,22 @@ public class Bullets{
     private double rad;
     private int speed;
     
-    private Color c1;
     
     public Bullets(int x, int y, double angle, String shoot){
+        //GET CO-ORDINATES OF PLAYER AS WELL AS KEYBOARD INPUT IF SHOOTING
         this.x = x;
         this.y = y;
         this.shoot = shoot;
         r = 4;
         
-        speed = 17;
+        speed = 10;
         rad = Math.toRadians(angle);
         dx = (int) (Math.cos(rad) * speed);
         dy = (int) Math.sin(rad) * speed;
-        c1 = Color.YELLOW;
         getPlayerImage();
     }
+    
+    //GET VISUALS FROM FILES
     public void getPlayerImage(){
         
         try{
@@ -44,7 +45,9 @@ public class Bullets{
             e.printStackTrace();
         }
     }
-        public double getX(){
+    
+    //RETURN BULLET CO-ORDINATES
+    public double getX(){
         return x;
     }
     public double getY(){
@@ -54,6 +57,7 @@ public class Bullets{
         return r;
     }
     
+    //UPDATE BULLET POSITION
     public boolean update(){
         x += dx;
         y += dy;
@@ -63,6 +67,7 @@ public class Bullets{
         return false;
     }
     
+    //DRAW BULLET IMAGE
     public void draw(Graphics2D g2){
 
         BufferedImage image = null;

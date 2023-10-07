@@ -49,7 +49,7 @@ public class Player extends Entity{
         y = 550;
         r = 10;
         lives = 3;
-        speed2 = 5;
+        speed2 = 6;
         dir = "down";
         shoot = "No";
         

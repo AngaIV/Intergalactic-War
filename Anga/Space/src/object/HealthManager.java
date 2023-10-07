@@ -10,21 +10,21 @@ import main.GPanel;
 
 public class HealthManager {
     
+    //INITIALIZE CLASSES AND OBJECTS
     private GPanel gp;
     private Health[] h;
-    private Player player; // Initialize or pass a Player object
+    private Player player; 
     private BufferedImage heartDef;
     private int lives;
     
     public HealthManager(GPanel gp, Player player) {
         this.player = player;
         this.gp = gp;
-  // Initialize the Player object
-        //lives = player.getLives();
         h = new Health[3];
         getImage();
     }
-
+    
+    //GET VISUALS FROM FILES
     public void getImage() {
         try {
             h[0] = new Health();
@@ -40,7 +40,8 @@ public class HealthManager {
             e.printStackTrace();
         }
     }
-
+    
+    //DISPLAY VISUALS BASED ON PLAYER LIVES
     public void draw(Graphics2D g2) {
         lives = player.getLives();
         if (lives == 3) {

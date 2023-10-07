@@ -14,6 +14,8 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import object.BossBullets;
 import object.Bullets;
 import object.BotBullets;
@@ -22,24 +24,28 @@ import object.HealthManager;
 
 public class GPanel extends JPanel implements Runnable{
     
+    //SET PRPGRAM SCREEN VALUES
     public static int WIDTH = 1366;
     public static int HEIGHT = 768;
-    public int tilesize = 200;
+    
+    GPanel gp;
     private Thread thread;
-    KeyHandler kH = new KeyHandler();
+    UI ui = new UI(this);
+    KeyHandler kH = new KeyHandler(this);
+    
+    //Bullet/Boss and Bot Lists
     public static ArrayList<Bullets> BulletList;
     public static ArrayList<BotBullets> BotBulletList;
     public static ArrayList<BossBullets> bossBull;
     public static ArrayList<Bots> BotList;
     public static ArrayList<Boss> boss;
-    //public static ArrayList<Health> HealthList;
     public ArrayList<Entity> entityList = new ArrayList<>();
+    
+    //IN GAME VISUALS
     TileManager TM = new TileManager(this);
     HealthManager HM;
-//    private boolean isRunning;
-//    private BufferedImage image; //canvas
-//    private Graphics2D g;
     Player player = new Player(this, kH);
+    public int tilesize = 200;
     
     //IN-GAME LEVELS
     private long levelTimer;
@@ -52,8 +58,8 @@ public class GPanel extends JPanel implements Runnable{
     
  
     
-    
-    int FPS = 65;
+    //GAME FPS
+    int FPS = 70;
     
     
     //Game State
@@ -76,9 +82,6 @@ public class GPanel extends JPanel implements Runnable{
         
     }
     
-    public void setUp(){
-        gameState = NullMenu;
-    }
     
     public void startThread(){
         thread = new Thread(this);
@@ -104,7 +107,9 @@ public class GPanel extends JPanel implements Runnable{
         waveNum = 0;
         numBots = 7;
         startLevel = true;
+        gameState = play;
         
+        //GAME LOOP
         while(thread!=null){
             
             update();
@@ -122,7 +127,7 @@ public class GPanel extends JPanel implements Runnable{
             catch(InterruptedException e) {
                 e.printStackTrace();
             }
-            if(gameState == stop){
+            if(Lost){
                 break;
             }    
         }
@@ -130,13 +135,13 @@ public class GPanel extends JPanel implements Runnable{
         
     public void update(){
 
-        
+        //STOP GAME IF PLAYER LOSES ALL 3 LIVES
         if (player.getLives() == 0){
             Lost = true;
-            gameState = stop;
         }
         
-       //NEW LEVEL
+        
+       //INCREASE LEVEL AFTER 4 WAVES
         if(levelTimer == 0 && BotList.size() ==0){
             
             if (waveNum == 4){
@@ -149,6 +154,7 @@ public class GPanel extends JPanel implements Runnable{
             levelTimer = System.nanoTime();
         }
         else{
+            //DELAY TIME BETWEEN LEVELS AND WAVES
             levelTimeDifference = (System.nanoTime()-levelTimer)/1000000;
             if(levelTimeDifference > levelDelay){
                 levelTimer = 0;
@@ -156,16 +162,28 @@ public class GPanel extends JPanel implements Runnable{
                 startLevel = true;
             }
         }
-//       String llv = "Display";
-//       int lives = 3;
-//       HealthList.add(new Health(lives, llv));
-       
+
+       //RESUME GAME
+        if (gameState == play){
        //CRAETE MORE BOTTSSS!!!!!!!!!!!!!
-       if(startLevel && BotList.isEmpty()){
-           botCreation();
-       }
-       
-        player.update();
+            if(startLevel && BotList.isEmpty()){
+                botCreation();
+            }
+            player.update();
+
+            for (int i=0; i<BotList.size(); i++){
+                BotList.get(i).update();
+            }
+            for (int i=0; i<boss.size(); i++){
+                boss.get(i).update();
+            }
+        }
+        //PAUSE GAME
+        if(gameState == pause){
+            
+        }
+        
+        //REMOVE BULLETS FROM LIST ONCE OUT OF BOUNDS
         for (int i=0; i<BotBulletList.size(); i++){
             boolean remove = BotBulletList.get(i).update();
             if(remove){
@@ -173,6 +191,7 @@ public class GPanel extends JPanel implements Runnable{
                 i--;
             }
         }
+        //REMOVE BULLETS FROM LIST ONCE OUT OF BOUNDS
         for (int i=0; i<bossBull.size(); i++){
             boolean remove = bossBull.get(i).update();
             if(remove){
@@ -180,6 +199,7 @@ public class GPanel extends JPanel implements Runnable{
                 i--;
             }
         }
+        //REMOVE BULLETS FROM LIST ONCE OUT OF BOUNDS
         for (int i=0; i<BulletList.size(); i++){
             boolean remove = BulletList.get(i).update();
             if(remove){
@@ -187,14 +207,7 @@ public class GPanel extends JPanel implements Runnable{
                 i--;
             }
         }
-        
-        
-        for (int i=0; i<BotList.size(); i++){
-            BotList.get(i).update();
-        }
-        for (int i=0; i<boss.size(); i++){
-            boss.get(i).update();
-        }
+
         
         for (int i=0; i<BulletList.size(); i++){
             Bullets b = BulletList.get(i);
@@ -202,7 +215,7 @@ public class GPanel extends JPanel implements Runnable{
             double by = b.getY();
             double br = b.getR();
             
-            //bullet bot collision
+            //BOT BULLET + PLAYER COLLISION
             for (int j=0; j<BotList.size(); j++){
                 Bots bot =BotList.get(j);
                 
@@ -223,7 +236,7 @@ public class GPanel extends JPanel implements Runnable{
                 }
                         
             }
-            //boss collision
+            //BOSS PLAYER COLLISION
             for (int j=0; j<boss.size(); j++){
                 Boss bs =boss.get(j);
                 
@@ -246,7 +259,7 @@ public class GPanel extends JPanel implements Runnable{
             }
             
             
-            //Checking for dead enemies
+            //CHECK IF BOTS ARE DEAD
             for (int j=0; j<BotList.size(); j++){
                 if(BotList.get(j).ifDead()){
                     player.addScore(10);
@@ -254,7 +267,7 @@ public class GPanel extends JPanel implements Runnable{
                     j--;
                 }
             }
-            //checking if boss is dead
+            //CHECK IF BOSS IS DEAD
             for (int m=0; m<boss.size(); m++){
                 if(boss.get(m).Dead()){
                     player.addScore(10);
@@ -262,13 +275,13 @@ public class GPanel extends JPanel implements Runnable{
                     m--;
                 }
             }
-                //player enemy collision
+                
                 if (!player.isRecoverig()){
                     int xC = player.getx();
                     int yC = player.gety();
                     int rC = player.getr();
                     
-
+                        //PLAYER BULLET + BOT COLLISION
                         for (int l=0; l<BotBulletList.size(); l++){
                             BotBullets bb = BotBulletList.get(l);
                             double bbx = bb.getXX();
@@ -278,14 +291,13 @@ public class GPanel extends JPanel implements Runnable{
                             double dx = xC - bbx;
                             double dy = yC - bby;
                             double distance = Math.sqrt(dx*dx + dy*dy);
-                            //System.out.println(distance +" "+ rC + bbr);
                             if (distance < (rC + bbr)){
                                 BotBulletList.remove(i);
                                 player.lifelost();
                                 l--;
                             } 
                         }
-                        //boss bullets & player collision
+                        //BOSS BULLETS + PLAYER COLLISION
                         for (int l=0; l<bossBull.size(); l++){
                             BossBullets bull = bossBull.get(l);
                             double bullx = bull.getXX();
@@ -295,7 +307,6 @@ public class GPanel extends JPanel implements Runnable{
                             double dx = xC - bullx;
                             double dy = yC - bully;
                             double distance = Math.sqrt(dx*dx + dy*dy);
-                            //System.out.println(distance +" "+ rC + bbr);
                             if (distance < (rC + bullr)){
                                 bossBull.remove(i);
                                 player.lifelost();
@@ -309,13 +320,15 @@ public class GPanel extends JPanel implements Runnable{
         
     }
     
+    //GET PLAYER LIVES
     public int getL(){
          return player.getLives();
     }
     
+    //CREATE BOTS BASED ON LEVEL
     private void botCreation(){
-        BotList.clear();
-        boss.clear();
+        BotList.clear(); //ENSURE LIST IS EMPTY
+        boss.clear(); //ENSURE LIST IS EMPTY
         Bots b;
         String t = "Yes";
        
@@ -343,22 +356,23 @@ public class GPanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-        
-        //Title Screen
-       
-        //DRAW LEVEL NUMBER
 
-        
+        //DRAW IN-GAME VISUALS
         TM.draw(g2);
         HM.draw(g2);
         player.draw(g2);
         
+        //DRAW PAUSE-STATE TEXT
+        if(gameState == pause){
+            ui.draw(g);
+        }
    
-        //draw player score
+        //DRAW PLAYER SCORE
         g2.setColor(Color.RED);
-        g2.setFont(new Font("Century Gothic", Font.PLAIN, 20));
-        g2.drawString("Score: " + player.getScore(), WIDTH-250, 35);
-
+        g2.setFont(new Font("Century Gothic", Font.BOLD, 20));
+        g2.drawString("SCORE: " + player.getScore(), WIDTH-250, 35);
+        
+        //DRAW IN-GAME VISUALS(BULLETS AND BOTS)
         for (int i=0; i<BulletList.size(); i++){
             BulletList.get(i).draw(g2);
         }
@@ -375,28 +389,32 @@ public class GPanel extends JPanel implements Runnable{
         for (int i=0; i<bossBull.size(); i++){
             bossBull.get(i).draw(g2);
         }
+        
+        //DISPLAY TEXT WHEN USER LOSES
         if (Lost){
-                g2.setFont(new Font("Century Gothic", Font.PLAIN, 50));
+                g2.setFont(new Font("Century Gothic", Font.BOLD, 50));
                 String loseMessage = "-    Y O U   L O S E    -";
                 int length = (int) g2.getFontMetrics().getStringBounds(loseMessage, g2).getWidth();
                 g2.setColor(Color.RED);
                 g2.drawString(loseMessage, WIDTH / 2 - length / 2, HEIGHT / 2);
         }
         if(levelTimer != 0){
+            
+            //DISPLAY TEXT WHEN ENTERING BOSS LEVEL 
             if(levelNum == 3  && waveNum == 4){
-                g2.setFont(new Font("Century Gothic",Font.PLAIN, 50));
+                g2.setFont(new Font("Century Gothic",Font.BOLD, 50));
                 String s = "-   B O S S    L E V E L   -";
                 int length = (int) g2.getFontMetrics().getStringBounds(s, g2).getWidth();
                 int al = (int) (255 * Math.sin(50* levelTimeDifference / levelDelay));
                 al = Math.max(al, 0);
                 if(al > 255) al = 255;
-                g2.setColor(new Color(255,255,255,al));
+                g2.setColor(new Color(255,0,0,al));
                 g2.drawString(s, WIDTH/2 - length/2, HEIGHT/2);
                 
             }
 
-            
-            g2.setFont(new Font("Century Gothic",Font.PLAIN, 50));
+            //DISPLAY LEVEL AND WAVE NUMBER
+            g2.setFont(new Font("Century Gothic",Font.BOLD, 50));
             String s = "-   LVL " + levelNum +  "  W A V E  " + waveNum + "   -";
             int length = (int) g2.getFontMetrics().getStringBounds(s, g2).getWidth();
             int al = (int) (255 * Math.sin(3.14 * levelTimeDifference / levelDelay));
@@ -404,11 +422,9 @@ public class GPanel extends JPanel implements Runnable{
             if(al > 255) al = 255;
             g2.setColor(new Color(255,255,255,al));
             g2.drawString(s, WIDTH/2 - length/2, HEIGHT/2);
+            
+
         }
-        
-//        for (int i = 0; i < player.getLives(); i++){
-//            
-//        }
         g2.dispose();
     }
     

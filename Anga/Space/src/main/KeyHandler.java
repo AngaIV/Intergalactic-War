@@ -9,9 +9,9 @@ public class KeyHandler implements KeyListener{
     public boolean PressUp, PressDown, PressLeft, PressRight, PressShoot;
     GPanel gpan;
     
-    /*public KeyHandler(GPanel gpan){
+    public KeyHandler(GPanel gpan){
         this.gpan = gpan;
-    }*/
+    }
 
 
     @Override
@@ -19,6 +19,7 @@ public class KeyHandler implements KeyListener{
     }
 
     @Override
+    //GET USER KEYBOARD INPUT
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         
@@ -38,14 +39,16 @@ public class KeyHandler implements KeyListener{
             PressShoot = true;
          
         }
-    
+        if (keyCode == KeyEvent.VK_P){
+            if (gpan.gameState == gpan.play){
+                gpan.gameState = gpan.pause;
+            }
+            else if (gpan.gameState == gpan.pause){
+                gpan.gameState = gpan.play;
+            }            
+        } 
     }
-    
-    /*public void playState(int keyCode){
-        if (keyCode == KeyEvent.VK_F){
-            PressShoot = true;
-        }
-    }*/
+
     @Override
     public void keyReleased(KeyEvent e){
         int keyCode = e.getKeyCode();

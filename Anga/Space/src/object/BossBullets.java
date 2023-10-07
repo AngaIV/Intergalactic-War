@@ -24,6 +24,7 @@ public class BossBullets{
     public boolean t;
 
     public BossBullets(int x, int y, int angle,int type, boolean shoot1){
+        //GET BOSS CO-ORDIANTES
         this.x = x;
         this.y = y;
         this.type = type;
@@ -31,13 +32,15 @@ public class BossBullets{
         r = 4;
         t = true;
         
-        speed = 15;
+        speed = 10;
         rad = Math.toRadians(angle);
         dx = (int) (Math.cos(rad) * speed);
         dy = (int) Math.sin(rad) * speed;
         
         getPlayerImage();
     }
+    
+    //GET PLAYER VISUALS FROM FILES
     public void getPlayerImage(){
         
         try{
@@ -51,6 +54,8 @@ public class BossBullets{
             e.printStackTrace();
         }
     }
+    
+    //RETURN BULLET CO-ORDINATES
     public double getXX(){
         return x;
     }
@@ -61,6 +66,7 @@ public class BossBullets{
         return r;
     }
     
+    //UPDATE BULLET POSITION
     public boolean update(){
         x += dx;
         y += dy;
@@ -69,7 +75,7 @@ public class BossBullets{
         }
         return false;
     }
-    
+    //DRAW BULLET IMAGES
     public void draw(Graphics2D g2){
         BufferedImage image = null;
         BufferedImage image1 = null;

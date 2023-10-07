@@ -24,6 +24,7 @@ public class BotBullets{
     public boolean t;
 
     public BotBullets(int x, int y, int angle,int type, boolean shoot1){
+        //GET CO-ORDINATES OF BOTS
         this.x = x;
         this.y = y;
         this.type = type;
@@ -31,13 +32,15 @@ public class BotBullets{
         r = 4;
         t = true;
         
-        speed = 15;
+        speed = 10;
         rad = Math.toRadians(angle);
         dx = (int) (Math.cos(rad) * speed);
         dy = (int) Math.sin(rad) * speed;
         
         getPlayerImage();
     }
+    
+    //GET VISUALS FROM FILES
     public void getPlayerImage(){
         
         try{
@@ -49,6 +52,8 @@ public class BotBullets{
             e.printStackTrace();
         }
     }
+    
+    //RETURN BULLET CO-ORDINATES
     public double getXX(){
         return x;
     }
@@ -59,6 +64,7 @@ public class BotBullets{
         return r;
     }
     
+    //UPDATE BULLET POSITION 
     public boolean update(){
         x += dx;
         y += dy;
@@ -68,6 +74,7 @@ public class BotBullets{
         return false;
     }
     
+    //DRAW BULLET IMAGES BASED ON DIFFERENT TYPES OF BOTS
     public void draw(Graphics2D g2){
 
         BufferedImage image = null;
