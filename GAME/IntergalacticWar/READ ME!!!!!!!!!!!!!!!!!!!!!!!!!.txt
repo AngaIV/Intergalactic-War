@@ -4,3 +4,6 @@ To run the project from the command line, go to the dist folder and
 type the following:
 
 java -jar "Space.jar" 
+
+
+{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{{THE GAME CODE IS IN THE SRC FOLDER...}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
