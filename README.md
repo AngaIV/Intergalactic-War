@@ -21,6 +21,7 @@ Concepts used: The Loop concept serves as the base for the game, the game only r
               - Constants: Constants are defined using public static final variables to represent game states, screen dimensions, and other fixed values.
               - Mathematical Calculations: Mathematical calculations are used for collision detection, distance calculations, and other game physics calculations.
               - Inheritance: The GPanel class inherits from the JPanel class, and it overrides some of its methods. This is just one example of inheritance used in the project.
+              - Probability: We implemented the power-up system using probability. Some power-ups are more likely to drop after destroying an enemy than others.
 
 Assumptions: The game consists of only three levels, each comprising four waves. We expect the game to become progressively more challenging as you advance, eventually reaching a point where it becomes nearly impossible to complete.
 
