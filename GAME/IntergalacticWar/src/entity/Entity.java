@@ -8,7 +8,7 @@ public class Entity {
     
     public int x, y, xb, yb;
     public int speed2, speedbull;
-    public BufferedImage upDef, downDef, leftDef, rightDef, bulletDef, botDef, heartDef, upHit, downHit, leftHit, rightHit;
+    public BufferedImage upDef, downDef, leftDef, rightDef, bulletDef, botDef, heartDef, upHit, downHit, leftHit, rightHit, rightI, leftI, upI, downI;
     public String dir, shoot;
     public int counter = 0;
     public int num = 1;

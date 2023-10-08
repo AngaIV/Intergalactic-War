@@ -4,6 +4,7 @@ import TilePack.TileManager;
 import entity.Boss;
 import entity.Bots;
 import entity.Entity;
+import entity.Explosion;
 import entity.Player;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -37,6 +38,7 @@ public class GPanel extends JPanel implements Runnable{
     public static ArrayList<Bots> BotList;
     public static ArrayList<Boss> boss;
     public static ArrayList<PowerUps> P_ups;
+    public static ArrayList<Explosion> Exp;
     public ArrayList<Entity> entityList = new ArrayList<>();
     
     //IN GAME VISUALS
@@ -97,6 +99,7 @@ public class GPanel extends JPanel implements Runnable{
         boss = new ArrayList<Boss>();
         bossBull = new ArrayList<BossBullets>();
         P_ups = new ArrayList<PowerUps>();
+        Exp = new ArrayList<Explosion>();
         
         String t = "Yes";
         
@@ -201,10 +204,19 @@ public class GPanel extends JPanel implements Runnable{
                 i--;
             }
         }
+        //Power-ups
         for (int i=0; i<P_ups.size(); i++){
             boolean remove = P_ups.get(i).update();
             if(remove){
                 P_ups.remove(i);
+                i--;
+                }
+            }
+        //Explosions
+        for (int i=0; i<Exp.size(); i++){
+            boolean remove = Exp.get(i).update();
+            if(remove){
+                Exp.remove(i);
                 i--;
                 }
             }
@@ -279,11 +291,13 @@ public class GPanel extends JPanel implements Runnable{
                     else if(random < 0.15){
                         P_ups.add(new PowerUps(3, BotList.get(j).getX(), BotList.get(j).getY(), true));
                     }
-
+                    //BOT EXPLOSION
+                    Exp.add(new Explosion(BotList.get(j).getX(), BotList.get(j).getY(),(int)BotList.get(j).getR(),(int)BotList.get(j).getR()+30,true));
                     player.addScore(10);
                     BotList.remove(j);
                     
                     j--;
+                    
                 }
             }
             //CHECK IF BOSS IS DEAD
@@ -387,13 +401,13 @@ public class GPanel extends JPanel implements Runnable{
             for (int i =0; i<numBots; i++){
                 BotList.add(new Bots(1,waveNum,t));
             }
-            numBots += 2;
+            numBots += 4;
         }
         if(levelNum == 2){
             for (int i =0; i<numBots; i++){
                 BotList.add(new Bots(2,waveNum,t));
             }
-            numBots += 3;
+            numBots += 4;
         }
         if(levelNum == 3){
             if (waveNum == 4){
@@ -401,10 +415,10 @@ public class GPanel extends JPanel implements Runnable{
                 for (int i =0; i<10; i++){
                     BotList.add(new Bots(3,waveNum,t));
                 }
-                for (int i =0; i<3; i++){
+                for (int i =0; i<5; i++){
                    BotList.add(new Bots(1,waveNum,t));
                 }
-                for (int i =0; i<5; i++){
+                for (int i =0; i<7; i++){
                     BotList.add(new Bots(2,waveNum,t));
                 }
             }else{
@@ -412,7 +426,7 @@ public class GPanel extends JPanel implements Runnable{
                     BotList.add(new Bots(3,waveNum,t));
                 }
             }
-            numBots += 4;
+            numBots += 6;
         }
     }
     
@@ -465,6 +479,9 @@ public class GPanel extends JPanel implements Runnable{
         
         for (int i=0; i<bossBull.size(); i++){
             bossBull.get(i).draw(g2);
+        }
+        for (int i=0; i<Exp.size(); i++){
+            Exp.get(i).draw(g2);
         }
         
         //DISPLAY TEXT WHEN USER LOSES

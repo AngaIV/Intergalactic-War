@@ -17,7 +17,8 @@ public class Player extends Entity{
     GPanel gpan;
     KeyHandler kH;
     private int lives;
-    
+    //PLAYER IS INVISIBLE TO ENEMIES IF HE DOES NOT OPEN FIRE SO HE WILL NOT LOSE LIVES EHEN HIT
+    private boolean invisible;
     //SCORE
     private int score;
     
@@ -68,6 +69,7 @@ public class Player extends Entity{
         speed2 = 6;
         dir = "down";
         shoot = "No";
+        invisible = false;
         
       
     }
@@ -101,6 +103,8 @@ public class Player extends Entity{
             rightHit = ImageIO.read(getClass().getResourceAsStream("/images/ShipRHit.png"));
             leftHit = ImageIO.read(getClass().getResourceAsStream("/images/ShipLHit.png"));
             downHit = ImageIO.read(getClass().getResourceAsStream("/images/ShipDHit.png"));
+            
+            
 
         }
         catch(IOException e){
@@ -201,6 +205,8 @@ public class Player extends Entity{
                 
             }
             
+        }else{
+            invisible = true;
         }
         //INVINCIBILITY OF PLAYER WHEN SHOT
         long elapsed = (System.nanoTime() - recoveryTime)/1000000;
@@ -215,6 +221,44 @@ public class Player extends Entity{
     public void draw(Graphics2D g2){
         //DRAW PLAYER IMAGE
         BufferedImage image = null;
+        
+          if (invisible){
+            switch(dir){
+                case "up":
+                    if (num == 1){
+                        image = upHit;
+                    }
+                    if (num == 2){
+                        image = downDef;
+                    }
+                    break;
+                case "down":
+                    if (num == 1){
+                        image = downHit;
+                    }
+                    if (num == 2){
+                        image = downDef;
+                    }
+                    break;
+                case "right":
+                    if (num == 1){
+                        image = rightHit;
+                    }
+                    if (num == 2){
+                        image = downDef;
+                    }
+                    break;
+                case "left":
+                    if (num == 1){
+                        image = leftHit;
+                    }
+                    if (num == 2){
+                        image = downDef;
+                    }
+                    break;
+            }
+                }
+        
         if (recovering){
             switch(dir){
                 case "up":
