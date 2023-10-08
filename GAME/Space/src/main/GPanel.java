@@ -5,6 +5,7 @@ import entity.Boss;
 import entity.Bots;
 import entity.Entity;
 import entity.Player;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.Dimension;
@@ -12,7 +13,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,6 +21,7 @@ import object.Bullets;
 import object.BotBullets;
 import object.Health;
 import object.HealthManager;
+import object.PowerUps;
 
 public class GPanel extends JPanel implements Runnable{
     
@@ -33,12 +34,13 @@ public class GPanel extends JPanel implements Runnable{
     UI ui = new UI(this);
     KeyHandler kH = new KeyHandler(this);
     
-    //Bullet/Boss and Bot Lists
+    //BULLET, BOSS, BOT AND POWERUP LISTS
     public static ArrayList<Bullets> BulletList;
     public static ArrayList<BotBullets> BotBulletList;
     public static ArrayList<BossBullets> bossBull;
     public static ArrayList<Bots> BotList;
     public static ArrayList<Boss> boss;
+    public static ArrayList<PowerUps> P_ups;
     public ArrayList<Entity> entityList = new ArrayList<>();
     
     //IN GAME VISUALS
@@ -98,6 +100,7 @@ public class GPanel extends JPanel implements Runnable{
         BotBulletList = new ArrayList<BotBullets>();
         boss = new ArrayList<Boss>();
         bossBull = new ArrayList<BossBullets>();
+        P_ups = new ArrayList<PowerUps>();
         
         String t = "Yes";
         
@@ -170,20 +173,15 @@ public class GPanel extends JPanel implements Runnable{
                 botCreation();
             }
             player.update();
-
+            
             for (int i=0; i<BotList.size(); i++){
                 BotList.get(i).update();
             }
+
             for (int i=0; i<boss.size(); i++){
                 boss.get(i).update();
             }
-        }
-        //PAUSE GAME
-        if(gameState == pause){
-            
-        }
-        
-        //REMOVE BULLETS FROM LIST ONCE OUT OF BOUNDS
+                    //REMOVE BULLETS FROM LIST ONCE OUT OF BOUNDS
         for (int i=0; i<BotBulletList.size(); i++){
             boolean remove = BotBulletList.get(i).update();
             if(remove){
@@ -207,7 +205,18 @@ public class GPanel extends JPanel implements Runnable{
                 i--;
             }
         }
-
+        for (int i=0; i<P_ups.size(); i++){
+            boolean remove = P_ups.get(i).update();
+            if(remove){
+                P_ups.remove(i);
+                i--;
+                }
+            }
+        }
+        //PAUSE GAME
+        if(gameState == pause){
+            
+        }
         
         for (int i=0; i<BulletList.size(); i++){
             Bullets b = BulletList.get(i);
@@ -262,8 +271,22 @@ public class GPanel extends JPanel implements Runnable{
             //CHECK IF BOTS ARE DEAD
             for (int j=0; j<BotList.size(); j++){
                 if(BotList.get(j).ifDead()){
+                    
+                    //probability of GETTING A POWERUP
+                    double random = Math.random();
+                    if(random < 0.04){
+                        P_ups.add(new PowerUps(1, BotList.get(j).getX(), BotList.get(j).getY(), true));
+                    }
+                    else if(random < 0.3){
+                        P_ups.add(new PowerUps(2, BotList.get(j).getX(), BotList.get(j).getY(), true));
+                    }
+                    else if(random < 0.15){
+                        P_ups.add(new PowerUps(3, BotList.get(j).getX(), BotList.get(j).getY(), true));
+                    }
+
                     player.addScore(10);
                     BotList.remove(j);
+                    
                     j--;
                 }
             }
@@ -294,6 +317,9 @@ public class GPanel extends JPanel implements Runnable{
                             if (distance < (rC + bbr)){
                                 BotBulletList.remove(i);
                                 player.lifelost();
+                                //LOSE BULLET POWER UPS IF SHOT
+                                player.bulletLevel = 0;
+                                player.power = 0;
                                 l--;
                             } 
                         }
@@ -317,6 +343,34 @@ public class GPanel extends JPanel implements Runnable{
             }
             
         }
+        //PLAYER , POWERUP COLLISION
+        int playerx = player.getx();
+        int playery = player.gety();
+        int playerr = player.getr();
+        for (int i=0;i<P_ups.size();i++){
+            PowerUps p = P_ups.get(i);
+            double x = p.getx();
+            double y = p.gety();
+            double r = p.getr();
+            double dx = playerx - x;
+            double dy = playery - y;
+            double distance = Math.sqrt(dx*dx + dy*dy);
+            
+            //POWER UP COLLECTED
+            if(distance < playerr + r){
+                if(P_ups.get(i).gettype() == 1){
+                    player.addLife();
+                }
+                if(P_ups.get(i).gettype() == 2){
+                    player.increasedBullets(1);
+                }
+                if(P_ups.get(i).gettype() == 3){
+                    player.increasedBullets(2);
+                }
+                P_ups.remove(i);
+                i--;
+            }
+        }
         
     }
     
@@ -337,19 +391,32 @@ public class GPanel extends JPanel implements Runnable{
             for (int i =0; i<numBots; i++){
                 BotList.add(new Bots(1,waveNum,t));
             }
-            numBots += 4;
+            numBots += 2;
         }
         if(levelNum == 2){
             for (int i =0; i<numBots; i++){
                 BotList.add(new Bots(2,waveNum,t));
             }
-            numBots += 5;
+            numBots += 3;
         }
         if(levelNum == 3){
-                for (int a=0;a<numBots;a++){
+            if (waveNum == 4){
+                boss.add(new Boss(3, waveNum, t));
+                for (int i =0; i<10; i++){
                     BotList.add(new Bots(3,waveNum,t));
                 }
-                numBots += 6;
+                for (int i =0; i<3; i++){
+                   BotList.add(new Bots(1,waveNum,t));
+                }
+                for (int i =0; i<5; i++){
+                    BotList.add(new Bots(2,waveNum,t));
+                }
+            }else{
+                for (int a=0;a<waveNum;a++){
+                    BotList.add(new Bots(3,waveNum,t));
+                }
+            }
+            numBots += 4;
         }
     }
     
@@ -366,6 +433,16 @@ public class GPanel extends JPanel implements Runnable{
         if(gameState == pause){
             ui.draw(g);
         }
+        
+        //DRAW BULLET LEVEL
+        g2.setColor(Color.GREEN);
+        g2.fillRect(9, 50, player.getPower()*15, 15);
+        g2.setColor(Color.GREEN);
+        g2.setStroke(new BasicStroke(2));
+        for (int i=0 ;i<player.getReqPower();i++){
+            g2.drawRect(9+15*i, 50, 15, 15);
+        }
+        g2.setStroke(new BasicStroke(1));
    
         //DRAW PLAYER SCORE
         g2.setColor(Color.RED);
@@ -376,6 +453,7 @@ public class GPanel extends JPanel implements Runnable{
         for (int i=0; i<BulletList.size(); i++){
             BulletList.get(i).draw(g2);
         }
+
         for (int i=0; i<boss.size(); i++){
             boss.get(i).draw(g2);
         }
@@ -384,6 +462,9 @@ public class GPanel extends JPanel implements Runnable{
         }
         for (int i=0; i<BotBulletList.size(); i++){
             BotBulletList.get(i).draw(g2);
+        }
+        for (int i=0; i<P_ups.size(); i++){
+            P_ups.get(i).draw(g2);
         }
         
         for (int i=0; i<bossBull.size(); i++){
@@ -411,18 +492,18 @@ public class GPanel extends JPanel implements Runnable{
                 g2.setColor(new Color(255,0,0,al));
                 g2.drawString(s, WIDTH/2 - length/2, HEIGHT/2);
                 
-            }
+            }else{
 
-            //DISPLAY LEVEL AND WAVE NUMBER
-            g2.setFont(new Font("Century Gothic",Font.BOLD, 50));
-            String s = "-   LVL " + levelNum +  "  W A V E  " + waveNum + "   -";
-            int length = (int) g2.getFontMetrics().getStringBounds(s, g2).getWidth();
-            int al = (int) (255 * Math.sin(3.14 * levelTimeDifference / levelDelay));
-            al = Math.max(al, 0);
-            if(al > 255) al = 255;
-            g2.setColor(new Color(255,255,255,al));
-            g2.drawString(s, WIDTH/2 - length/2, HEIGHT/2);
-            
+                //DISPLAY LEVEL AND WAVE NUMBER
+                g2.setFont(new Font("Century Gothic",Font.BOLD, 50));
+                String s = "-   LVL " + levelNum +  "  W A V E  " + waveNum + "   -";
+                int length = (int) g2.getFontMetrics().getStringBounds(s, g2).getWidth();
+                int al = (int) (255 * Math.sin(3.14 * levelTimeDifference / levelDelay));
+                al = Math.max(al, 0);
+                if(al > 255) al = 255;
+                g2.setColor(new Color(255,255,255,al));
+                g2.drawString(s, WIDTH/2 - length/2, HEIGHT/2);
+                }
 
         }
         g2.dispose();

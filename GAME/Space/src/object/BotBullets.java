@@ -29,7 +29,7 @@ public class BotBullets{
         this.y = y;
         this.type = type;
         this.shoot1 = shoot1;
-        r = 4;
+        r = 10;
         t = true;
         
         speed = 10;

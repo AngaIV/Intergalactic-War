@@ -26,7 +26,7 @@ public class Bullets{
         this.x = x;
         this.y = y;
         this.shoot = shoot;
-        r = 4;
+        r = 10;
         
         speed = 10;
         rad = Math.toRadians(angle);

@@ -5,15 +5,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyHandler implements KeyListener{
-    
     public boolean PressUp, PressDown, PressLeft, PressRight, PressShoot;
     GPanel gpan;
     
     public KeyHandler(GPanel gpan){
         this.gpan = gpan;
     }
-
-
+    
     @Override
     public void keyTyped(KeyEvent e) {
     }

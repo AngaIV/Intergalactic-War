@@ -14,7 +14,7 @@ public class BossBullets{
     private int y;
     private int r;
     public boolean shoot1;
-    private BufferedImage bulletDef, bullet2, bullet3, bullet4;
+    private BufferedImage bulletDef;
     
     private int type;
     private int dx;
@@ -29,7 +29,7 @@ public class BossBullets{
         this.y = y;
         this.type = type;
         this.shoot1 = shoot1;
-        r = 4;
+        r = 15;
         t = true;
         
         speed = 10;
@@ -44,12 +44,7 @@ public class BossBullets{
     public void getPlayerImage(){
         
         try{
-            bulletDef = ImageIO.read(getClass().getResourceAsStream("/bullets/PlayerPowerUP.png"));
-            bullet2 = ImageIO.read(getClass().getResourceAsStream("/bullets/BackUp.png"));
-            bullet3 = ImageIO.read(getClass().getResourceAsStream("/bullets/Type2.png"));
-            bullet4 = ImageIO.read(getClass().getResourceAsStream("/bullets/Type3.png"));
-            
-            
+            bulletDef = ImageIO.read(getClass().getResourceAsStream("/bullets/PlayerPowerUP.png"));          
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -78,20 +73,10 @@ public class BossBullets{
     //DRAW BULLET IMAGES
     public void draw(Graphics2D g2){
         BufferedImage image = null;
-        BufferedImage image1 = null;
-        BufferedImage image2 = null;
-        BufferedImage image3 = null;
-        BufferedImage image4 = null;
+
         if(shoot1){
              image = bulletDef;
-             g2.drawImage(image,x, y+200, 40, 40, null);
-             image1 = bullet4;
-             g2.drawImage(image1,x+50, y+200, 40, 40, null);
-             image2 = bullet2;
-             g2.drawImage(image2,x+100, y+200, 40, 40, null);
-             image3 = bullet3;
-             g2.drawImage(image3,x+150, y+200, 40, 40, null);
-             g2.drawImage(image,x+200, y+200, 40, 40, null);
+             g2.drawImage(image,x, y, 40, 40, null);
         }
  
     }

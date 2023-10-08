@@ -20,7 +20,7 @@ public class HealthManager {
     public HealthManager(GPanel gp, Player player) {
         this.player = player;
         this.gp = gp;
-        h = new Health[3];
+        h = new Health[5];
         getImage();
     }
     
@@ -36,6 +36,12 @@ public class HealthManager {
             h[2] = new Health();
             h[2].image = ImageIO.read(getClass().getResourceAsStream("/utility/Heart.png"));
             
+            h[3] = new Health();
+            h[3].image = ImageIO.read(getClass().getResourceAsStream("/utility/Heart.png"));
+            
+            h[4] = new Health();
+            h[4].image = ImageIO.read(getClass().getResourceAsStream("/utility/Heart.png"));
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,6 +50,20 @@ public class HealthManager {
     //DISPLAY VISUALS BASED ON PLAYER LIVES
     public void draw(Graphics2D g2) {
         lives = player.getLives();
+        if (lives == 5) {
+            g2.drawImage(h[0].image, 0, 10, 35, 35, null);
+            g2.drawImage(h[1].image, 25, 10, 35, 35, null);
+            g2.drawImage(h[2].image, 50, 10, 35, 35, null);
+            g2.drawImage(h[3].image, 75, 10, 35, 35, null);
+            g2.drawImage(h[4].image, 100, 10, 35, 35, null);
+        }
+        if (lives == 4) {
+            g2.drawImage(h[0].image, 0, 10, 35, 35, null);
+            g2.drawImage(h[1].image, 25, 10, 35, 35, null);
+            g2.drawImage(h[2].image, 50, 10, 35, 35, null);
+            g2.drawImage(h[3].image, 75, 10, 35, 35, null);
+        }
+        
         if (lives == 3) {
             g2.drawImage(h[0].image, 0, 10, 35, 35, null);
             g2.drawImage(h[1].image, 25, 10, 35, 35, null);

@@ -35,7 +35,7 @@ public class Bots {
         this.wave = wave;
         this.Thrust = Thrust;
         
-
+        //UPDATES BOTS PER WAVE & LEVEL
         if (type == 1) {
             if (wave == 1) {
                 speed = 3;
@@ -78,7 +78,7 @@ public class Bots {
                 health = 5;
             }
             if (wave == 4) {
-                speed = 5;
+                speed = 4;
                 r = 10;
                 health = 6;
             }
@@ -92,19 +92,19 @@ public class Bots {
                 health = 6;
             }
             if (wave == 2) {
-                speed = 6;
+                speed = 5;
                 r = 10;
                 health = 6;
             }
             if (wave == 3) {
-                speed = 6;
+                speed = 5;
                 r = 10;
                 health = 6;
             }
             if (wave == 4) {
-                speed = 6;
+                speed = 5;
                 r = 10;
-                health = 6;
+                health = 10;
             }
         }
         
@@ -123,11 +123,13 @@ public class Bots {
         values();
     }
     public void values(){
+        //DEFAULT BOT VALUES
         speed = 2;
         xb = 592;
         yb = 570;
     }
     
+    //GET BOT IMAGES
     public void getPlayerImage(){
         try{
             botDef = ImageIO.read(getClass().getResourceAsStream("/BotSkins/Bot1.png"));
@@ -146,25 +148,25 @@ public class Bots {
     public double getR(){
         return r;
     }
-        public boolean ifDead(){
+    public boolean ifDead(){ //CALLED IF BOTS ARE DEAD
         return dead;
     }
-    public void ifHit(){
-    
+    public void ifHit(){ //BOTS LOSE HEALTH WHEN SHOT
         health--;
         if(health <= 0){
             dead = true;
         }
     }
-    public int getType(){
+    public int getType(){ //RETURN TYPE OF BOT
         return type;
     }
-    public int getWave(){
+    public int getWave(){ //RETURN WAVE NUMBER
         return wave;
     }
 
 
     public void update() {
+        //UPDATE BOT POSITION
         if (!dead) {
             x += dx;
             y += dy;
@@ -205,9 +207,9 @@ public class Bots {
                
                 
             }
+            //BOTS SHOOT BULLETS
             if (Thrust.equals("Yes") && !dead) {
                 long pass = (System.nanoTime() - fTimer) / 1000000;
-//                long currentTime = System.nanoTime();
                 if (pass > fDelay) {
                     GPanel.BotBulletList.add(new BotBullets((int) getX(), (int) getY(), -270,type,  shoot1));
                     fTimer = System.nanoTime();

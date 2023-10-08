@@ -35,11 +35,11 @@ public class Boss {
         this.type = type;
         this.wave = wave;
         this.Thrust = Thrust;
-              
+        //CALLS BOSS AT THE FINAL WAVE AT THE FINAL LEVEL     
         if (type == 3) {
-            if (wave == 3) {
+            if (wave == 4) {
                 speed = 4;
-                r = 10;
+                r = 40;
                 health = 50;
             }
         }
@@ -54,16 +54,16 @@ public class Boss {
         ready = false;
         dead = false;
         fTimer = System.nanoTime();
-        fDelay = 10000;
+        fDelay = 5000;
         getPlayerImage();
         values();
     }
-    public void values(){
+    public void values(){ //DEFAULT BOT VALUES
         speed = 10;
         xb = 592;
         yb = 570;
     }
-    
+    //GET BOT IMAGE
     public void getPlayerImage(){
         try{
             bossDef = ImageIO.read(getClass().getResourceAsStream("/BossSkins/boss.png"));
@@ -71,6 +71,7 @@ public class Boss {
             e.printStackTrace();
         }
     }
+    //RETURN BOSS POSITION
     public double gtX(){
         return x;
     }
@@ -80,11 +81,11 @@ public class Boss {
     public double gtR(){
         return r;
     }
-        public boolean Dead(){
+    public boolean Dead(){
         return dead;
     }
+    //REDUCE BOSS HEALTH IF SHOT
     public void Hit(){
-    
         health--;
         if(health <= 0){
             dead = true;
@@ -97,7 +98,7 @@ public class Boss {
         return wave;
     }
 
-
+    //UPDATE BOSS POSITION
     public void update() {
         if (!dead) {
             x += dx;
@@ -130,7 +131,7 @@ public class Boss {
                 Thrust = "Yes";
            
             }
-            if (y > GPanel.HEIGHT/2 - r && dy > 0) {
+            if (y > GPanel.HEIGHT/3 && dy > 0) {
                 dy = -dy;
                 yb += speed;
                 shoot1 = true;
@@ -141,7 +142,11 @@ public class Boss {
             if (Thrust.equals("Yes") && !dead) {
                 long pass = (System.nanoTime() - fTimer) / 1000000;
                 if (pass > fDelay) {
-                    GPanel.bossBull.add(new BossBullets((int) gtX(), (int) gtY(), -270,type,  shoot1));
+                    GPanel.bossBull.add(new BossBullets((int) gtX()+200, (int) gtY(), -270,type,  shoot1));
+                    GPanel.bossBull.add(new BossBullets((int) gtX()+50, (int) gtY(), -270,type,  shoot1));
+                    GPanel.bossBull.add(new BossBullets((int) gtX()+100, (int) gtY(), -270,type,  shoot1));
+                    GPanel.bossBull.add(new BossBullets((int) gtX()+150, (int) gtY(), -270,type,  shoot1));
+                    GPanel.bossBull.add(new BossBullets((int) gtX()+200, (int) gtY(), -270,type,  shoot1));
                     fTimer = System.nanoTime();
                 }
             }
@@ -152,7 +157,6 @@ public class Boss {
 
 
     public void draw(Graphics2D g2){
-        
         BufferedImage image = null;
         switch(Thrust){
             case "Yes":

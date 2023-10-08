@@ -21,11 +21,24 @@ public class Player extends Entity{
     //SCORE
     private int score;
     
+    //DELAY BETWEEN EACH BULLET FIRED
     private long fTimer;
     private long fDelay;
+    
+    //ENSURES PLAYER INVINCIBILTY WHEN SHOT
     private boolean recovering;
     private long recoveryTime;
+    
+    //UPDATES HEALTH VISUAL IF PLAYER LOSES OR GAIN A LIVES
     HealthManager HM;
+    
+    //POWERUP SYSTEM
+    public int bulletLevel;
+    public int power;
+    public int[] powerneeded = {
+        1, 2, 3, 4, 5
+    };
+    private long PUTimer;
     
     
     public Player(GPanel gpan, KeyHandler kH){
@@ -39,9 +52,12 @@ public class Player extends Entity{
         fDelay = 200;
         recovering = false;
         recoveryTime = 0;
+        PUTimer = System.nanoTime();
+        PUTimer = 6000;
     }
     
     public void values(){
+        //DEFAULT PLAYER VALUES
         xb = 672;
         x = 650;
         score = 0;
@@ -55,8 +71,26 @@ public class Player extends Entity{
         
       
     }
-
     
+    public void increasedBullets(int i){
+        power += i;
+        if (power >= powerneeded[bulletLevel]){ //CHECK IF PLAYER HAVE ENOUGH POWER TO GET TO THE NEXT BULLET LEVEL
+            power -= powerneeded[bulletLevel];
+            bulletLevel++;
+        }
+    }
+    public int getBLevel(){
+        return bulletLevel;
+    }
+    public int getPower(){
+       
+        return power;
+    }
+    public int getReqPower(){
+        return powerneeded[bulletLevel];
+    }
+
+    //GET PLAYPER IMAGES
     public void playerImage(){
         try{
             upDef = ImageIO.read(getClass().getResourceAsStream("/images/ShipUP.png"));
@@ -73,12 +107,13 @@ public class Player extends Entity{
             e.printStackTrace();
         }
     }
-        public int getx() {return x;}
+    //RETURN PLAYER POSITION
+    public int getx() {return x;}
     public int gety() {return y;}
     public int getr() {
         r =10;
         return r;}
-    public boolean isRecoverig(){
+    public boolean isRecoverig(){ //CHECK IF PLAYER WAS SHOT
         return recovering;
     }
     public int getLives(){
@@ -87,19 +122,28 @@ public class Player extends Entity{
     public int getScore(){
         return score;
     }
-    public void addScore(int s){
+    public void addScore(int s){//UPDATE PLAYER SCORE
         score += s;
     }
-
+    
+    public void addLife() {
+        if (lives >= 5){
+        //MAX LIVES ARE == 5
+        }else{
+           lives++; 
+        }
+        
+    }
     
     public void lifelost(){
+        //LOSE LIFE WHEN SHOT
         lives--;
         recovering = true;
         recoveryTime = System.nanoTime();
     }
     
     public void update(){
-        
+        //MOVE PLAYER POSITION ON COMMAND
         if(kH.PressUp == true || kH.PressDown == true || kH.PressLeft == true || kH.PressRight == true || kH.PressShoot == true){
             
             if(kH.PressUp == true){
@@ -132,16 +176,33 @@ public class Player extends Entity{
                 counter = 0;
             }
         }
-    
+        //SHOOT BULLETS ON COMMAND
         if (kH.PressShoot == true){ 
             long pass = (System.nanoTime() - fTimer) / 1000000;
+            long endPowerUp = (System.nanoTime() - PUTimer) / 1000000;
             shoot = "Yes";
             if (pass > fDelay) {
-                GPanel.BulletList.add(new Bullets(xb, yb, 270, shoot)); // Pass x and y coordinates of the spaceship
                 fTimer = System.nanoTime();
+                
+                if(bulletLevel < 2){
+                    GPanel.BulletList.add(new Bullets(xb, yb, 270, shoot)); 
+                }
+                else if (bulletLevel < 4) {
+                    GPanel.BulletList.add(new Bullets(xb + 4, yb, 270, shoot)); // SHOOT 2 BULLETS PER SHOT WHEN 2 POWER UP BARS ARE FULL
+                    GPanel.BulletList.add(new Bullets(xb - 4, yb, 270, shoot));
+                }
+                else {
+                    GPanel.BulletList.add(new Bullets(xb + 20, yb+5, 270, shoot)); // SHOOT 3 BULLETS PER SHOT WHEN 5 POWER UP BARS ARE FULL
+                    GPanel.BulletList.add(new Bullets(xb, yb, 270, shoot)); 
+                    GPanel.BulletList.add(new Bullets(xb - 20, yb+5, 270, shoot)); 
+ 
+                }
+                
+                
             }
             
         }
+        //INVINCIBILITY OF PLAYER WHEN SHOT
         long elapsed = (System.nanoTime() - recoveryTime)/1000000;
         if (elapsed > 4000){
             recovering = false;
@@ -152,7 +213,7 @@ public class Player extends Entity{
     
 
     public void draw(Graphics2D g2){
-        
+        //DRAW PLAYER IMAGE
         BufferedImage image = null;
         if (recovering){
             switch(dir){
@@ -229,5 +290,6 @@ public class Player extends Entity{
         }
         g2.drawImage(image, x, y, 80, 80, null);
     }
+
     
 }

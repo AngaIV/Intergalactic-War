@@ -15,6 +15,8 @@ public class TileManager {
         Tile = new tile[10];
         getTileImage();
     }
+    
+    //GET TILE IMAGES
     public void getTileImage(){
         
         try{
@@ -49,7 +51,7 @@ public class TileManager {
         
         
         
-        //First Row
+        //DRAW FIRST ROW OF TILES
         g2.drawImage(Tile[0].image, 0, 0, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[3].image, 200, 0, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[1].image, 400, 0, gp.tilesize,gp.tilesize,null);
@@ -58,7 +60,7 @@ public class TileManager {
         g2.drawImage(Tile[1].image, 1000, 0, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[4].image, 1200, 0, gp.tilesize,gp.tilesize,null);
         
-        //2nd Row
+        //DRAW SECOND ROW OF TILES
         g2.drawImage(Tile[4].image, 0, 200, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[4].image, 200, 200, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[0].image, 400, 200, gp.tilesize,gp.tilesize,null);
@@ -67,7 +69,7 @@ public class TileManager {
         g2.drawImage(Tile[1].image, 1000, 200, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[5].image, 1200, 200, gp.tilesize,gp.tilesize,null);
         
-        //3nd Row
+        //DRAW THIRD ROW OF TILES
         g2.drawImage(Tile[6].image, 0, 400, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[0].image, 200, 400, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[1].image, 400, 400, gp.tilesize,gp.tilesize,null);
@@ -76,7 +78,7 @@ public class TileManager {
         g2.drawImage(Tile[4].image, 1000, 400, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[4].image, 1200, 400, gp.tilesize,gp.tilesize,null);
         
-        //4nd Row
+        //DRAW FOURTH ROW OF TILES
         g2.drawImage(Tile[1].image, 0, 600, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[0].image, 200, 600, gp.tilesize,gp.tilesize,null);
         g2.drawImage(Tile[2].image, 400, 600, gp.tilesize,gp.tilesize,null);

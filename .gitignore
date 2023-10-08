@@ -397,3 +397,6 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 /Anga/Space/dist/
+/GAME/Space/build/
+/GAME/Space/dist/
+/GAME/IntergalacticWar/nbproject/private/
