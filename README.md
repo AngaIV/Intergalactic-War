@@ -8,7 +8,7 @@ Project title: Intergalactic War
 
 Project page: https://github.com/AngaIV/Intergalactic-War
 
-Instructions for use (allowable actions): To run the game, open the "GAME" folder and open the following folders in the sequence provided "IntergalacticWar->RUN GAME HERE->dist", once open double tap on the "IntergalacticWar.jar" file. To run the project from the command line, go to the dist folder and type the following: java -jar "IntergalacticWar.jar". To move player character use the arrow keys on the keyboard, to pause the game press the 'P' key and to shoot, press the 'S' key. You will find the game code inside the "src" folder.
+Instructions for use (allowable actions): To run the game, open the "GAME" folder and open the following folders in the sequence provided "IntergalacticWar->RUN GAME HERE->dist", once open download and double tap on the "IntergalacticWar.jar" file. To run the project from the command line, go to the dist folder and type the following: java -jar "IntergalacticWar.jar". At the title screen, to play a new game press on the "0" key that's above the letter keys(NOT THE ONE ON THE NUMBERS ON THE SIDE OF THE KEYBOARD), or press "1" key to quit the game. To move player character use the arrow keys on the keyboard, to pause the game press the 'P' key and to shoot, press the 'S' key. You will find the game code inside the "src" folder. 
 
 Tools used: Edited: Adobe Photoshop and Piskel were utilized for crafting and enhancing in-game characters and various visual elements.
 
@@ -23,6 +23,6 @@ Concepts used: The Loop concept serves as the base for the game, the game only r
               - Inheritance: The GPanel class inherits from the JPanel class, and it overrides some of its methods. This is just one example of inheritance used in the project.
               - Probability: We implemented the power-up system using probability. Some power-ups are more likely to drop after destroying an enemy than others.
 
-Assumptions: The game consists of only three levels, each comprising four waves. We expect the game to become progressively more challenging as you advance, eventually reaching a point where it becomes nearly impossible to complete.
+Assumptions: The game consists of only three levels, each comprising four waves. We expect the game to become progressively more challenging as you advance, eventually reaching a point where it becomes nearly impossible to complete. You have to gather and preserve your power-ups in order to increase your chances of beating the game.
 
-Limitations: The program does not consist of a menu screen at the begining of the game and after the user dies.
+Limitations: There are no levels beyond level 3, wave 4. The probability of the player taking damage from an enemy bullet while not firing is low.
