@@ -42,7 +42,18 @@ public class KeyHandler implements KeyListener{
             else if (gpan.gameState == gpan.pause){
                 gpan.gameState = gpan.play;
             }            
-        } 
+        }
+        if (keyCode == KeyEvent.VK_0){
+            if(gpan.gameState == gpan.titleState){
+                gpan.gameState = gpan.play;
+                gpan.Lost = false; //restart game if dead
+            }
+        }
+        if (keyCode == KeyEvent.VK_1){
+            if(gpan.gameState == gpan.titleState){ //kill program on command
+                System.exit(0);
+            }
+        }
     }
 
     @Override

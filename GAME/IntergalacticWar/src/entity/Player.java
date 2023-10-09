@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -8,23 +9,24 @@ import javax.imageio.ImageIO;
 import main.GPanel;
 import static main.GPanel.BulletList;
 import main.KeyHandler;
+import main.UI;
 import object.Bullets;
 import object.HealthManager;
 
 public class Player extends Entity{
 
-
+    UI ui;
     GPanel gpan;
     KeyHandler kH;
-    private int lives;
-    //PLAYER IS INVISIBLE TO ENEMIES IF HE DOES NOT OPEN FIRE SO HE WILL NOT LOSE LIVES EHEN HIT
-    private boolean invisible;
+    public int lives;
+   
     //SCORE
-    private int score;
+    public int score;
     
     //DELAY BETWEEN EACH BULLET FIRED
     private long fTimer;
     private long fDelay;
+    
     
     //ENSURES PLAYER INVINCIBILTY WHEN SHOT
     private boolean recovering;
@@ -40,11 +42,12 @@ public class Player extends Entity{
         1, 2, 3, 4, 5
     };
     private long PUTimer;
+
     
-    
-    public Player(GPanel gpan, KeyHandler kH){
+    public Player(GPanel gpan, KeyHandler kH, UI ui){
         this.gpan = gpan;
         this.kH = kH;
+        this.ui = ui;
 
         values();
         playerImage();
@@ -53,8 +56,7 @@ public class Player extends Entity{
         fDelay = 200;
         recovering = false;
         recoveryTime = 0;
-        PUTimer = System.nanoTime();
-        PUTimer = 6000;
+
     }
     
     public void values(){
@@ -69,17 +71,24 @@ public class Player extends Entity{
         speed2 = 6;
         dir = "down";
         shoot = "No";
-        invisible = false;
+        
         
       
     }
     
     public void increasedBullets(int i){
         power += i;
-        if (power >= powerneeded[bulletLevel]){ //CHECK IF PLAYER HAVE ENOUGH POWER TO GET TO THE NEXT BULLET LEVEL
+        if (bulletLevel >= 5){
+
+        }else{
+            if(power >= powerneeded[bulletLevel] && powerneeded[bulletLevel] < 5){ //CHECK IF PLAYER HAVE ENOUGH POWER TO GET TO THE NEXT BULLET LEVEL
+            
+            System.out.print(powerneeded[bulletLevel]);
             power -= powerneeded[bulletLevel];
             bulletLevel++;
         }
+        }
+        
     }
     public int getBLevel(){
         return bulletLevel;
@@ -89,6 +98,7 @@ public class Player extends Entity{
         return power;
     }
     public int getReqPower(){
+        
         return powerneeded[bulletLevel];
     }
 
@@ -140,6 +150,7 @@ public class Player extends Entity{
     }
     
     public void lifelost(){
+        
         //LOSE LIFE WHEN SHOT
         lives--;
         recovering = true;
@@ -205,8 +216,6 @@ public class Player extends Entity{
                 
             }
             
-        }else{
-            invisible = true;
         }
         //INVINCIBILITY OF PLAYER WHEN SHOT
         long elapsed = (System.nanoTime() - recoveryTime)/1000000;
@@ -222,42 +231,6 @@ public class Player extends Entity{
         //DRAW PLAYER IMAGE
         BufferedImage image = null;
         
-          if (invisible){
-            switch(dir){
-                case "up":
-                    if (num == 1){
-                        image = upHit;
-                    }
-                    if (num == 2){
-                        image = downDef;
-                    }
-                    break;
-                case "down":
-                    if (num == 1){
-                        image = downHit;
-                    }
-                    if (num == 2){
-                        image = downDef;
-                    }
-                    break;
-                case "right":
-                    if (num == 1){
-                        image = rightHit;
-                    }
-                    if (num == 2){
-                        image = downDef;
-                    }
-                    break;
-                case "left":
-                    if (num == 1){
-                        image = leftHit;
-                    }
-                    if (num == 2){
-                        image = downDef;
-                    }
-                    break;
-            }
-                }
         
         if (recovering){
             switch(dir){
