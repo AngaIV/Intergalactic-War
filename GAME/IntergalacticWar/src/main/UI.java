@@ -52,13 +52,13 @@ public class UI {
                 if (gp.Lost == true){
                                    //SHADOW
                         g2.setFont(new Font("Century Gothic", Font.BOLD, 80));
-                        String loseMessage = "Y O U   D I E D !";
+                        String loseMessage = "Y O U   L O S T !";
                         int length = (int) g2.getFontMetrics().getStringBounds(loseMessage, g2).getWidth();
                         g2.setColor(Color.WHITE);
                         g2.drawString(loseMessage, (WIDTH / 2 - length / 2)+3, (HEIGHT / 2)+3);
                         //GAME TITILE
                         g2.setFont(new Font("Century Gothic", Font.BOLD, 80));
-                         loseMessage = "Y O U   D I E D !";
+                         loseMessage = "Y O U   L O S T !";
                          length = (int) g2.getFontMetrics().getStringBounds(loseMessage, g2).getWidth();
                         g2.setColor(Color.RED);
                         g2.drawString(loseMessage, WIDTH / 2 - length / 2, (HEIGHT / 2));
