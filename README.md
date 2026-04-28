@@ -1,9 +1,9 @@
 # Intergalactic War - 1st Year Student Project
 
 <p align="center">
-  <img src="GAME/IntergalacticWar/Pictures/Intro.png" alt="Intergalactic War Screenshot 1" width="33%">
-  <img src="GAME/IntergalacticWar/Pictures/gameplay.png" alt="Intergalactic War Screenshot 2" width="33%">
-  <img src="GAME/IntergalacticWar/Pictures/lost.png" alt="Intergalactic War Screenshot 2" width="33%">
+  <img src="GAME/IntergalacticWar/Pictures/Intro.png" alt="Intergalactic War Screenshot 1" width="45%">
+  <img src="GAME/IntergalacticWar/Pictures/gameplay.png" alt="Intergalactic War Screenshot 2" width="45%">
+  <img src="GAME/IntergalacticWar/Pictures/lost.png" alt="Intergalactic War Screenshot 2" width="45%">
 </p>
 
 ## Project Information
