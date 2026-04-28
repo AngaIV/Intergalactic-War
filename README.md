@@ -10,7 +10,6 @@
 
 **Group Name:** XP Merchants  
 **Project Title:** Intergalactic War  
-**Project Page:** [GitHub Repository](https://github.com/AngaIV/Intergalactic-War)
 
 ## Team
 
