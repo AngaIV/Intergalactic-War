@@ -1,7 +1,7 @@
 # Intergalactic War - 1st Year Student Project
 
 <p align="center">
-  <img src="PASTE_IMAGE_LINK_HERE" alt="Intergalactic War Screenshot 1" width="45%">
+  <img src="GAME/IntergalacticWar/Pictures/Intro.png" alt="Intergalactic War Screenshot 1" width="45%">
   <img src="PASTE_IMAGE_LINK_HERE" alt="Intergalactic War Screenshot 2" width="45%">
 </p>
 
