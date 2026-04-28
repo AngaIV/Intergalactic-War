@@ -1,28 +1,31 @@
-Group name: XP Merchants
+# Intergalactic War - 1st Year Student Project
 
-Group members: Anga Peter, Liteta Tosi, Caiphus Mahlatji
+<p align="center">
+  <img src="PASTE_IMAGE_LINK_HERE" alt="Intergalactic War Screenshot 1" width="45%">
+  <img src="PASTE_IMAGE_LINK_HERE" alt="Intergalactic War Screenshot 2" width="45%">
+</p>
 
-Group mentor: Alden Boby
+## Project Information
 
-Project title: Intergalactic War
+**Group Name:** XP Merchants  
+**Project Title:** Intergalactic War  
+**Project Page:** [GitHub Repository](https://github.com/AngaIV/Intergalactic-War)
 
-Project page: https://github.com/AngaIV/Intergalactic-War
+## Team
 
-Instructions for use (allowable actions): To run the game, open the "GAME" folder and open the following folders in the sequence provided "IntergalacticWar->RUN GAME HERE->dist", once open download and double tap on the "IntergalacticWar.jar" file. To run the project from the command line, go to the dist folder and type the following: java -jar "IntergalacticWar.jar". At the title screen, to play a new game press on the "0" key that's above the letter keys(NOT THE ONE ON THE NUMBERS ON THE SIDE OF THE KEYBOARD), or press "1" key to quit the game. To move player character use the arrow keys on the keyboard, to pause the game press the 'P' key and to shoot, press the 'S' key. You will find the game code inside the "src" folder. 
+**Group Members:**
+- Anga Peter
+- Liteta Tosi
+- Caiphus Mahlatji
 
-Tools used: Edited: Adobe Photoshop and Piskel were utilized for crafting and enhancing in-game characters and various visual elements.
+**Group Mentor:** Alden Boby
 
-Concepts used: The Loop concept serves as the base for the game, the game only runs as intended no-stop until a player completes the game or dies if the loop is implemented. 
-              - Threads: The "Runnable" interface is implemented in the code, and a second thread is created to execute the game loop. This is how multithreading is used in the project.
-              - Loops: The code utilizes for loops to iterate through lists of game objects, such as bullets, bots, and power-ups.
-              - Event Handling: Event handling is achieved through the KeyListener implemented in the KeyHandler class. It listens for keyboard input and responds to user actions.
-              - Arrays: Arrays are used to store and manipulate game-related data, such as the levels of bots to be created.
-              - Comments: Comments are used throughout the code to provide explanations and document the functionality of various parts of the code.
-              - Constants: Constants are defined using public static final variables to represent game states, screen dimensions, and other fixed values.
-              - Mathematical Calculations: Mathematical calculations are used for collision detection, distance calculations, and other game physics calculations.
-              - Inheritance: The GPanel class inherits from the JPanel class, and it overrides some of its methods. This is just one example of inheritance used in the project.
-              - Probability: We implemented the power-up system using probability. Some power-ups are more likely to drop after destroying an enemy than others.
+## About the Game
 
-Assumptions: The game consists of only three levels, each comprising four waves. We expect the game to become progressively more challenging as you advance, eventually reaching a point where it becomes nearly impossible to complete. You have to gather and preserve your power-ups in order to increase your chances of beating the game.
+Intergalactic War is a Java-based arcade-style shooting game where the player progresses through waves of enemies across multiple levels. The game becomes more challenging as the player advances, requiring careful movement, shooting, and power-up management.
 
-Limitations: There are no levels beyond level 3, wave 4. The probability of the player taking damage from an enemy bullet while not firing is low.
+## How to Run the Game
+
+### Option 1: Run the JAR File
+
+1. Download and run the `IntergalacticWar.jar` executable file.
