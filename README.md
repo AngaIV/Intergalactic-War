@@ -27,6 +27,9 @@ Intergalactic War is a Java-based arcade-style shooting game where the player pr
 ## Controls
 <table> <tr> <th>Action</th> <th>Key</th> </tr> <tr> <td>Start New Game</td> <td><code>0</code> key above the letters</td> </tr> <tr> <td>Quit Game</td> <td><code>1</code></td> </tr> <tr> <td>Move Player</td> <td>Arrow Keys</td> </tr> <tr> <td>Shoot</td> <td><code>S</code></td> </tr> <tr> <td>Pause Game</td> <td><code>P</code></td> </tr> </table> <p> <strong>Note:</strong> Use the <code>0</code> key above the letter keys, not the number pad. </p>
 
+## Tools Used
+<table> <tr> <th>Tool</th> <th>Purpose</th> </tr> <tr> <td><strong>Java</strong></td> <td>Used to build the game logic and functionality.</td> </tr> <tr> <td><strong>Adobe Photoshop</strong></td> <td>Used for editing and enhancing visual elements.</td> </tr> <tr> <td><strong>Piskel</strong></td> <td>Used for creating and editing pixel-art characters and game assets.</td> </tr> </table>
+
 ## How to Run the Game
 
 ### Option 1: Run the JAR File
